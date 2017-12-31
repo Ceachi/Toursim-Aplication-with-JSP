@@ -103,7 +103,32 @@ public class AccomodationImpl implements AccomodationDAO {
 
 	@Override
 	public void updateAccomodation(Accomodation accomodation) {
-		// TODO Auto-generated method stub
+		String sql = "Update accomodation set name=?, "
+				+ "stars=?, description_full=?, description_short=?, "
+				+ "address_id=?, contact_id=?, "
+				+ "accomodation_type_id=? where id=? ";
+		 
+		try {
+		Connection conn = MySQLConnection.startConnection();
+        PreparedStatement pstm = conn.prepareStatement(sql);
+ 
+        // implement ? in query
+        pstm.setString(1, accomodation.getName());
+        pstm.setInt(2, accomodation.getStars());
+        pstm.setString(3, accomodation.getDescription_full());
+        pstm.setString(4, accomodation.getDescription_short());
+        pstm.setInt(5, accomodation.getAdress_id());
+        pstm.setInt(6, accomodation.getContact_id());
+        pstm.setInt(7, accomodation.getAccomodation_type_id());     
+        pstm.setInt(8, accomodation.getId());
+        
+          
+        //execute
+        pstm.executeUpdate();
+        pstm.close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 
 	}
 

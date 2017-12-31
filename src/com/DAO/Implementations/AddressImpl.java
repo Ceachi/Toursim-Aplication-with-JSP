@@ -95,7 +95,27 @@ public class AddressImpl implements AddressDAO {
 
 	@Override
 	public void updateAddress(Address address) {
-		// TODO Auto-generated method stub
+		String sql = "Update address set name =?, postal_code=?, latitude=?, longitude=?, city_id=? where id=? ";
+		 
+		try {
+		Connection conn = MySQLConnection.startConnection();
+        PreparedStatement pstm = conn.prepareStatement(sql);
+ 
+        // implement ? in query
+        pstm.setString(1,address.getName());
+        pstm.setString(2, address.getPostal_code());
+        pstm.setDouble(3,  address.getLatitude());
+        pstm.setDouble(4, address.getLongitude());
+        pstm.setInt(5, address.getCity_id());
+        pstm.setInt(6, address.getId());
+        
+          
+        //execute
+        pstm.executeUpdate();
+        pstm.close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 
 	}
 

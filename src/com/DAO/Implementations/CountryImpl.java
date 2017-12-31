@@ -93,8 +93,20 @@ public class CountryImpl implements CountryDAO {
 
 	@Override
 	public void updateCountry(Country country) {
-		// TODO Auto-generated method stub
-
+		String sql = "Update country set name =? where id=? ";
+		 
+		try {
+		Connection conn = MySQLConnection.startConnection();
+        PreparedStatement pstm = conn.prepareStatement(sql);
+ 
+        pstm.setString(1, country.getName());
+        pstm.setInt(2, country.getId());
+        pstm.executeUpdate();
+        
+        pstm.close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override

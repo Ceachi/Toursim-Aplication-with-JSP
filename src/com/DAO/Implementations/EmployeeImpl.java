@@ -105,7 +105,33 @@ public class EmployeeImpl implements EmployeeDAO {
 
 	@Override
 	public void updateEmployee(Employee employee) {
-		// TODO Auto-generated method stub
+		String sql = "Update employee set first_name=?, "
+				+ "last_name=?, contact_id=?, salary=?, "
+				+ "department_id=?, job_id=?, "
+				+ "password=? where id=? ";
+		 
+		try {
+		Connection conn = MySQLConnection.startConnection();
+        PreparedStatement pstm = conn.prepareStatement(sql);
+ 
+        // implement ? in query
+        pstm.setString(1, employee.getFirstName());
+        pstm.setString(2, employee.getLastName());
+        pstm.setInt(3, employee.getContact_id());
+        pstm.setFloat(4, employee.getSalary());
+        pstm.setInt(5, employee.getDepartment_id());
+        pstm.setInt(6, employee.getJob_id());
+        pstm.setString(7, employee.getPassword());
+        pstm.setInt(8, employee.getId());
+        
+        
+          
+        //execute
+        pstm.executeUpdate();
+        pstm.close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 
 	}
 

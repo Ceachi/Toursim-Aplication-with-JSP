@@ -92,7 +92,21 @@ public class RegionImpl implements RegionDAO {
 
 	@Override
 	public void updateRegion(Region region) {
-		// TODO Auto-generated method stub
+		String sql = "Update region set name =?, country_id=? where id=? ";
+		 
+		try {
+		Connection conn = MySQLConnection.startConnection();
+        PreparedStatement pstm = conn.prepareStatement(sql);
+ 
+        pstm.setString(1, region.getName());
+        pstm.setInt(2, region.getCountry_id());
+        pstm.setInt(3, region.getId());
+        
+        pstm.executeUpdate();
+        pstm.close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 
 	}
 

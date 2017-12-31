@@ -8,6 +8,6 @@ import com.Tables.Contact;
 public interface ContactDAO {
 	  public List<Contact> getAllContacts();
 	   public Contact getContact(int id);
-	   public void updateAccomodation(Contact contact);
+	   public void updateContact(Contact contact);
 	   public void deleteContact(Contact contact);
 }

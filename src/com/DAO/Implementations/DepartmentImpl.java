@@ -85,7 +85,24 @@ public class DepartmentImpl implements DepartmentDAO {
 
 	@Override
 	public void updateDepartment(Department department) {
-		// TODO Auto-generated method stub
+		String sql = "Update department set name =?,address_id=? where id=? ";
+		 
+		try {
+		Connection conn = MySQLConnection.startConnection();
+        PreparedStatement pstm = conn.prepareStatement(sql);
+ 
+        // implement ? in query
+        pstm.setString(1, department.getName());
+        pstm.setInt(2, department.getAddress_id());
+        pstm.setInt(3, department.getId());
+        
+          
+        //execute
+        pstm.executeUpdate();
+        pstm.close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 
 	}
 

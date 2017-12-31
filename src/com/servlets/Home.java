@@ -21,7 +21,7 @@ import com.Tables.*;
 public class Home extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Country country = Factory.getCountryImpl().getCountry("England");
+		Country country = Factory.getCountryImpl().getCountry("Romania");
 		List<Region> regionList = new ArrayList<Region>();
 		regionList = Factory.getCountryImpl().getAllCountryRegions(country);
 		
@@ -30,6 +30,12 @@ public class Home extends HttpServlet {
 				System.out.println(i.toString());
 			}
 		}
+		
+		Employee employee = Factory.getEmployeeImpl().getEmployee(1);
+		employee.setPassword("123");
+		Factory.getEmployeeImpl().updateEmployee(employee);
+		
+		
 		
 		request.setAttribute("regionList", regionList);
 

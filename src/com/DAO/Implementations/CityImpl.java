@@ -95,7 +95,26 @@ public class CityImpl implements CityDAO {
 
 	@Override
 	public void updateCity(City city) {
-		// TODO Auto-generated method stub
+		String sql = "Update city set name =?, ISC3=?, latitude=?, longitude=?, county_id=? where id=? ";
+		 
+		try {
+		Connection conn = MySQLConnection.startConnection();
+        PreparedStatement pstm = conn.prepareStatement(sql);
+ 
+        // implement ? in query
+        pstm.setString(1, city.getName());
+        pstm.setString(2, city.getISC3());
+        pstm.setDouble(3, city.getLatitude());
+        pstm.setDouble(4, city.getLongitude());
+        pstm.setInt(5, city.getCounty_id());
+        pstm.setInt(6, city.getId());
+          
+        //execute
+        pstm.executeUpdate();
+        pstm.close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 
 	}
 

@@ -75,7 +75,23 @@ public class CountyImpl implements CountyDAO {
 
 	@Override
 	public void updateCounty(County county) {
-		// TODO Auto-generated method stub
+		String sql = "Update county set name =?, region_id=? where id=? ";
+		 
+		try {
+		Connection conn = MySQLConnection.startConnection();
+        PreparedStatement pstm = conn.prepareStatement(sql);
+ 
+        // implement ? in query
+        pstm.setString(1, county.getName());
+        pstm.setInt(2, county.getRegion_id());
+        pstm.setInt(3, county.getId());
+        
+        //execute
+        pstm.executeUpdate();
+        pstm.close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 
 	}
 

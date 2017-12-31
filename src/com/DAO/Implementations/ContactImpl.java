@@ -105,8 +105,30 @@ public class ContactImpl implements ContactDAO {
 	}
 
 	@Override
-	public void updateAccomodation(Contact contact) {
-		// TODO Auto-generated method stub
+	public void updateContact(Contact contact) {
+		String sql = "Update contact set email=?, "
+				+ "phone=?, phone2=?, fax=?, website=?, "
+				+ "facebook=?, linkedin=? where id=? ";
+		 
+		try {
+		Connection conn = MySQLConnection.startConnection();
+        PreparedStatement pstm = conn.prepareStatement(sql);
+ 
+        // implement ? in query
+        pstm.setString(1, contact.getEmail());
+        pstm.setString(2, contact.getPhone());
+        pstm.setString(3, contact.getPhone2());
+        pstm.setString(4, contact.getFax());
+        pstm.setString(5, contact.getWebsite());
+        pstm.setString(6, contact.getFacebook());
+        pstm.setString(7, contact.getLinkedin());
+        
+        //execute
+        pstm.executeUpdate();
+        pstm.close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 		
 	}
 
