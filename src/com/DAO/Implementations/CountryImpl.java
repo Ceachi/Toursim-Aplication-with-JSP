@@ -111,7 +111,17 @@ public class CountryImpl implements CountryDAO {
 
 	@Override
 	public void deleteCountry(Country country) {
-		// TODO Auto-generated method stub
+		String sql = "Delete From Country where id= ?";
+		 
+		try {
+			Connection conn = MySQLConnection.startConnection();
+	        PreparedStatement pstm = conn.prepareStatement(sql);
+	        
+	        pstm.setInt(1, country.getId());
+	        pstm.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 
 	}
 

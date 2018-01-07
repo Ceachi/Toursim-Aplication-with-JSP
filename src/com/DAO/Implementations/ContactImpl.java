@@ -134,7 +134,17 @@ public class ContactImpl implements ContactDAO {
 
 	@Override
 	public void deleteContact(Contact contact) {
-		// TODO Auto-generated method stub
+		String sql = "Delete From Contact where id= ?";
+		 
+		try {
+			Connection conn = MySQLConnection.startConnection();
+	        PreparedStatement pstm = conn.prepareStatement(sql);
+	        
+	        pstm.setInt(1, contact.getId());
+	        pstm.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 		
 	}
 	

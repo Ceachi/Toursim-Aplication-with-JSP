@@ -97,7 +97,17 @@ public class CountyImpl implements CountyDAO {
 
 	@Override
 	public void deleteCounty(County county) {
-		// TODO Auto-generated method stub
+		String sql = "Delete From County where id= ?";
+		 
+		try {
+			Connection conn = MySQLConnection.startConnection();
+	        PreparedStatement pstm = conn.prepareStatement(sql);
+	        
+	        pstm.setInt(1, county.getId());
+	        pstm.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 
 	}
 

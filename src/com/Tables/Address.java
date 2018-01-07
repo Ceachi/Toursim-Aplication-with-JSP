@@ -1,7 +1,10 @@
 package com.Tables;
 
+import com.DAO.Implementations.Factory;
+
 public class Address {
 	
+
 	private int id;
 	private String name;
 	private String postal_code;
@@ -46,6 +49,14 @@ public class Address {
 		this.city_id = city_id;
 	}
 	
-	
+	public City getCity() {
+		return Factory.getCityImpl().getCity(this.getCity_id());
+	}
+
+	@Override
+	public String toString() {
+		return "Address [id=" + id + ", name=" + name + ", postal_code=" + postal_code + ", latitude=" + latitude
+				+ ", longitude=" + longitude + ", city_id=" + city_id + "]";
+	}
 
 }

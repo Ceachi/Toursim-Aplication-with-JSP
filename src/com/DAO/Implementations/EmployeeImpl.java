@@ -137,7 +137,17 @@ public class EmployeeImpl implements EmployeeDAO {
 
 	@Override
 	public void deleteEmployee(Employee employee) {
-		// TODO Auto-generated method stub
+		String sql = "Delete From Employee where id= ?";
+		 
+		try {
+			Connection conn = MySQLConnection.startConnection();
+	        PreparedStatement pstm = conn.prepareStatement(sql);
+	        
+	        pstm.setInt(1, employee.getId());
+	        pstm.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 
 	}
 

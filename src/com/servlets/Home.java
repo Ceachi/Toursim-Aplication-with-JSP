@@ -25,8 +25,11 @@ public class Home extends HttpServlet {
 		List<Region> regionList = new ArrayList<Region>();
 		regionList = Factory.getCountryImpl().getAllCountryRegions(country);
 		
-		if(regionList != null) {
-			for(Region i : regionList) {
+		List<Accomodation> accomodations = new ArrayList<Accomodation>();
+		accomodations = Factory.getAccomodationImpl().getAllAccomodations();
+		
+		if(accomodations != null) {
+			for(Accomodation i : accomodations) {
 				System.out.println(i.toString());
 			}
 		}
@@ -35,9 +38,9 @@ public class Home extends HttpServlet {
 		employee.setPassword("123");
 		Factory.getEmployeeImpl().updateEmployee(employee);
 		
-		
-		
+
 		request.setAttribute("regionList", regionList);
+		request.setAttribute("accomodations", accomodations);
 
         RequestDispatcher dispatcher = request.getServletContext()
                 .getRequestDispatcher("/WEB-INF/views/homeView.jsp");

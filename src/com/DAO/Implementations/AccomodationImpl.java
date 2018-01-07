@@ -41,7 +41,7 @@ public class AccomodationImpl implements AccomodationDAO {
 	        	accomodation.setStars(accomodationStars);
 	        	accomodation.setDescription_full(accomodationDescription_full);
 	        	accomodation.setDescription_short(accomodationDescription_short);
-	        	accomodation.setAdress_id(address_id);
+	        	accomodation.setAddress_id(address_id);
 	        	accomodation.setContact_id(contact_id);
 	        	accomodation.setAccomodation_type_id(accomodation_type_id);
 	        	
@@ -87,7 +87,7 @@ public class AccomodationImpl implements AccomodationDAO {
 	        	accomodation.setStars(accomodationStars);
 	        	accomodation.setDescription_full(accomodationDescription_full);
 	        	accomodation.setDescription_short(accomodationDescription_short);
-	        	accomodation.setAdress_id(address_id);
+	        	accomodation.setAddress_id(address_id);
 	        	accomodation.setContact_id(contact_id);
 	        	accomodation.setAccomodation_type_id(accomodation_type_id);
 	        	
@@ -117,7 +117,7 @@ public class AccomodationImpl implements AccomodationDAO {
         pstm.setInt(2, accomodation.getStars());
         pstm.setString(3, accomodation.getDescription_full());
         pstm.setString(4, accomodation.getDescription_short());
-        pstm.setInt(5, accomodation.getAdress_id());
+        pstm.setInt(5, accomodation.getAddress_id());
         pstm.setInt(6, accomodation.getContact_id());
         pstm.setInt(7, accomodation.getAccomodation_type_id());     
         pstm.setInt(8, accomodation.getId());
@@ -134,8 +134,17 @@ public class AccomodationImpl implements AccomodationDAO {
 
 	@Override
 	public void deleteAccomodation(Accomodation accomodation) {
-		// TODO Auto-generated method stub
-
+		String sql = "Delete From Accomodation where id= ?";
+		 
+		try {
+			Connection conn = MySQLConnection.startConnection();
+	        PreparedStatement pstm = conn.prepareStatement(sql);
+	        
+	        pstm.setInt(1, accomodation.getId());
+	        pstm.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override

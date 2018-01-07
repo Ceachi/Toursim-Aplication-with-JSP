@@ -108,7 +108,17 @@ public class DepartmentImpl implements DepartmentDAO {
 
 	@Override
 	public void deleteDepartment(Department department) {
-		// TODO Auto-generated method stu
+		String sql = "Delete From Department where id= ?";
+		 
+		try {
+			Connection conn = MySQLConnection.startConnection();
+	        PreparedStatement pstm = conn.prepareStatement(sql);
+	        
+	        pstm.setInt(1, department.getId());
+	        pstm.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override

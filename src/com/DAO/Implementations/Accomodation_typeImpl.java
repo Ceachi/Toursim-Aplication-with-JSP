@@ -99,7 +99,17 @@ public class Accomodation_typeImpl implements Accomodation_typeDAO {
 
 	@Override
 	public void deleteAccomodation_type(Accomodation_type accomodation_type) {
-		// TODO Auto-generated method stub
+		String sql = "Delete From Accomodation_type where id= ?";
+		 
+		try {
+			Connection conn = MySQLConnection.startConnection();
+	        PreparedStatement pstm = conn.prepareStatement(sql);
+	        
+	        pstm.setInt(1, accomodation_type.getId());
+	        pstm.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 
 	}
 

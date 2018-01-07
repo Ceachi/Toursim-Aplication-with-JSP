@@ -2,6 +2,9 @@ package com.Tables;
 
 import java.util.List;
 
+import com.DAO.Implementations.Factory;
+
+
 public class Accomodation {
 	private int id;
 	private String name;
@@ -10,17 +13,16 @@ public class Accomodation {
 	private String description_short;
 	//private List<Address> address;
 	//private List<Contact> contact;
-	private int adress_id;
+	private int address_id;
 	private int contact_id;
 	private int accomodation_type_id;
-	private String accomodation_type;
 	
 	
-	public int getAdress_id() {
-		return adress_id;
+	public int getAddress_id() {
+		return address_id;
 	}
-	public void setAdress_id(int adress_id) {
-		this.adress_id = adress_id;
+	public void setAddress_id(int address_id) {
+		this.address_id = address_id;
 	}
 	public int getContact_id() {
 		return contact_id;
@@ -64,15 +66,26 @@ public class Accomodation {
 	public void setDescription_short(String description_short) {
 		this.description_short = description_short;
 	}
-	public String getAccomodation_type() {
-		return accomodation_type;
+	
+	@Override
+	public String toString() {
+		return "Accomodation [id=" + id + ", name=" + name + ", stars=" + stars + ", description_full="
+				+ description_full + ", description_short=" + description_short + ", adress_id=" + address_id
+				+ ", contact_id=" + contact_id + ", accomodation_type_id=" + accomodation_type_id+"]";
 	}
-	public void setAccomodation_type(String accomodation_type) {
-		this.accomodation_type = accomodation_type;
+	
+
+	public Address getAddress() {
+		return Factory.getAddressImpl().getAddress(this.getAddress_id());
 	}
 	
+	public Contact getContact() {
+		return Factory.getContactImpl().getContact(this.getContact_id());
+	}
 	
-	
+	public Accomodation_type getType() {
+		return Factory.getAccomodation_typeImpl().getAccomodation_type(this.getAccomodation_type_id());
+	}
 	
 	
 	

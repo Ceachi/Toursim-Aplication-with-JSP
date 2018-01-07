@@ -70,7 +70,7 @@ public class CityImpl implements CityDAO {
 	        	// get the parameters selected in the table
 	        	int cityID = rs.getInt("id");
 	        	String cityName = rs.getString("name");
-	        	String cityISC3 = rs.getString("ISC3");// daca apare vreo eroare, poate ISC3 e cu litere mici
+	        	String cityISC3 = rs.getString("ISO3");// daca apare vreo eroare, poate ISC3 e cu litere mici
 	        	double cityLatitude = rs.getDouble("latitude");
 	        	double cityLongitude = rs.getDouble("longitude");
 	        	int county_id = rs.getInt("county_id");
@@ -120,7 +120,17 @@ public class CityImpl implements CityDAO {
 
 	@Override
 	public void deleteCity(City city) {
-		// TODO Auto-generated method stub
+		String sql = "Delete From City where id= ?";
+		 
+		try {
+			Connection conn = MySQLConnection.startConnection();
+	        PreparedStatement pstm = conn.prepareStatement(sql);
+	        
+	        pstm.setInt(1, city.getId());
+	        pstm.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 
 	}
 

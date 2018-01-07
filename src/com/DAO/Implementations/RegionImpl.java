@@ -86,9 +86,6 @@ public class RegionImpl implements RegionDAO {
 		Country country = Factory.getCountryImpl().getCountry(country_id);
 		return country;
 	}
-	
-	
-	
 
 	@Override
 	public void updateRegion(Region region) {
@@ -112,7 +109,17 @@ public class RegionImpl implements RegionDAO {
 
 	@Override
 	public void deleteRegion(Region region) {
-		// TODO Auto-generated method stub
+		String sql = "Delete From Region where id= ?";
+		 
+		try {
+			Connection conn = MySQLConnection.startConnection();
+	        PreparedStatement pstm = conn.prepareStatement(sql);
+	        
+	        pstm.setInt(1, region.getId());
+	        pstm.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 
 	}	
 

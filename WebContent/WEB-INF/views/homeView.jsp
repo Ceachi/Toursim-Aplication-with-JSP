@@ -8,8 +8,8 @@
 <title>Home Page</title>
 </head>
 <body>
-
-	 <jsp:include page="_header.jsp"></jsp:include>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" />
+    
      <jsp:include page="_menu.jsp"></jsp:include>
 	
 	<%	
@@ -21,12 +21,49 @@
 				response.sendRedirect("loginView.jsp");
 			}
 	%>
+	
+	<div class="container">
+      <h3>Accomodations</h3>
+      <div class="input-group">
+        <input class="form-control" placeholder="Search accomodations">
+        <div class="input-group-addon" ><i class="fa fa-search"></i></div>
+      </div>
+      <br>
+      <table class="table table-bordered">
+      <thead class="thead-inverse">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Name</th>
+          <th scope="col">Stars</th>
+          <th scope="col">City</th>
+          <th scope="col">Address</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+      <c:forEach items="${accomodations}" var="accomodation" >
+	        <tr>
+	          <th scope="row">#</th>
+	          <td>${accomodation.getName()}</td>
+	          <td>${accomodation.getStars()}</td>
+	          <td>${accomodation.getAddress().getCity().getName()}</td>
+	          <td>${accomodation.getAddress().getName()}</td>
+	          <td>
+	            <a href="" class="btn btn-outline-success">Edit</a>
+	            <a href="" class="btn btn-outline-success">Delete</a>
+	          </td>
+	        </tr>
+       </c:forEach>
+      </tbody>
+    </table>
+    </div>
 
  
 	Countries:
-	<table border="1" cellpadding="5" cellspacing="1" >
+	<table border="1" cellpadding="5" cellspacing="1" class="table table-bordered">
        <tr>
           <th>id</th>
+          <th>Name</th>
           <th>Name</th>
        </tr>
        <c:forEach items="${regionList}" var="region" >

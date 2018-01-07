@@ -35,7 +35,7 @@ public class AddressImpl implements AddressDAO {
 	        	int city_id = rs.getInt("city_id");       	
 	        	
 	        	// add to list
-	        	address.setId(city_id);
+	        	address.setId(addressID);
 	        	address.setName(addressName);
 	        	address.setPostal_code(addressPostalCode);
 	        	address.setLatitude(addressLatitude);
@@ -76,7 +76,7 @@ public class AddressImpl implements AddressDAO {
 	        	int city_id = rs.getInt("city_id");       	
 	        	
 	        	// add to list
-	        	address.setId(city_id);
+	        	address.setId(addressID);
 	        	address.setName(addressName);
 	        	address.setPostal_code(addressPostalCode);
 	        	address.setLatitude(addressLatitude);
@@ -121,7 +121,17 @@ public class AddressImpl implements AddressDAO {
 
 	@Override
 	public void deleteAddress(Address address) {
-		// TODO Auto-generated method stub
+		String sql = "Delete From Address where id= ?";
+		 
+		try {
+			Connection conn = MySQLConnection.startConnection();
+	        PreparedStatement pstm = conn.prepareStatement(sql);
+	        
+	        pstm.setInt(1, address.getId());
+	        pstm.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 
 	}
 
