@@ -16,7 +16,8 @@ public interface AccomodationDAO {
 	   public Contact getContact(int contact_id);
 	   public Accomodation_type getAccomodation_type(int accomodation_type_id);
 	   
-	   
+
+	   public Accomodation insertAccomodation(Accomodation accomodation);
 	   public void updateAccomodation(Accomodation accomodation);
 	   public void deleteAccomodation(Accomodation accomodation);
 

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.Tables.*;
 import com.dbConnection.MySQLConnection;
+import com.mysql.jdbc.Statement;
 import com.DaoInterfaces.AccomodationDAO;
 
 public class AccomodationImpl implements AccomodationDAO {
@@ -100,7 +101,42 @@ public class AccomodationImpl implements AccomodationDAO {
 		}
 		return null;
 	}
+	@Override
+	public Accomodation insertAccomodation(Accomodation accomodation) {
+		String sql = "insert accomodation "
+				+ "(name,stars,description_full,description_short,address_id,contact_id,accomodation_type_id)"
+				+ "values (?,?,?,?,?,?,?)";
+		 
+		try {
+			Connection conn = MySQLConnection.startConnection();
+	        PreparedStatement pstm = conn.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+	 
+	        // implement ? in query
+	        pstm.setString(1, accomodation.getName());
+	        pstm.setInt(2, accomodation.getStars());
+	        pstm.setString(3, accomodation.getDescription_full());
+	        pstm.setString(4, accomodation.getDescription_short());
+	        pstm.setInt(5, accomodation.getAddress_id());
+	        pstm.setInt(6, accomodation.getContact_id());
+	        pstm.setInt(7, accomodation.getAccomodation_type_id());
+	        
+	          
+	        //execute
+	        pstm.executeUpdate();
+	        
+	        ResultSet generatedKeys = pstm.getGeneratedKeys();
+            if (generatedKeys.next()) {
+            	accomodation.setId(generatedKeys.getInt(1));
+            }
+	        
+	        pstm.close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return accomodation;
 
+	}
 	@Override
 	public void updateAccomodation(Accomodation accomodation) {
 		String sql = "Update accomodation set name=?, "

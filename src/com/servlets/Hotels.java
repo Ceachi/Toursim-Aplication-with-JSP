@@ -16,6 +16,7 @@ import com.Tables.Accomodation;
 import com.Tables.Accomodation_type;
 import com.Tables.Address;
 import com.Tables.Contact;
+import com.mysql.jdbc.StringUtils;
 
 /**
  * Servlet implementation class Hotels
@@ -53,27 +54,65 @@ public class Hotels extends HttpServlet {
 		doGet(request, response);
 	}
 	
-	private void insert(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
+	private void insert(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		
+        String name = request.getParameter("name");
+        int type_id = Integer.parseInt(request.getParameter("type_id"));
+        String description_short = request.getParameter("description_short");
+        String description_full = request.getParameter("description_full");
+        int stars = Integer.parseInt(request.getParameter("stars"));
+        int address_id = Integer.parseInt(request.getParameter("address_id"));
+        int contact_id = Integer.parseInt(request.getParameter("contact_id"));
+        
+        Accomodation accomodation= new Accomodation();
+        
+        accomodation.setName(name);
+        accomodation.setAccomodation_type_id(type_id);
+        accomodation.setStars(stars);
+        accomodation.setDescription_short(description_short);
+        accomodation.setDescription_full(description_full);
+        accomodation.setAddress_id(address_id);
+        accomodation.setContact_id(contact_id);
+        
+        accomodation = Factory.getAccomodationImpl().insertAccomodation(accomodation);
+
+        response.sendRedirect("?action=edit&id="+accomodation.getId());
 		
 	}
+	
 	private void edit(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int id = Integer.parseInt(request.getParameter("id"));
-		Accomodation accomodation= Factory.getAccomodationImpl().getAccomodation(id);
+		String idParam = request.getParameter("id");
+		
+		if( idParam != null) {
+			int id = Integer.parseInt(idParam);
+			Accomodation accomodation= Factory.getAccomodationImpl().getAccomodation(id);
+	        request.setAttribute("accomodation", accomodation);
+        } 
+
 		List<Address> addresses= Factory.getAddressImpl().getAllAddress();
 		List<Contact> contacts= Factory.getContactImpl().getAllContacts();
 		List<Accomodation_type> types= Factory.getAccomodation_typeImpl().getAllAccomodation_types();
 		
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/hotel/edit.jsp");
         request.setAttribute("addresses", addresses);
         request.setAttribute("contacts", contacts);
-        request.setAttribute("accomodation", accomodation);
         request.setAttribute("types", types);
+        
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/hotel/edit.jsp");
         dispatcher.forward(request, response);
 		
 	}
 	private void update(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int id = Integer.parseInt(request.getParameter("id"));
+		String idParam = request.getParameter("id");
+		System.out.println("ftghdf");
+		System.out.println(idParam);
+		
+		if( StringUtils.isNullOrEmpty(idParam) ) {
+			insert(request,response);
+			return;
+        }
+		
+		int id = Integer.parseInt(idParam);
+		
         String name = request.getParameter("name");
         int type_id = Integer.parseInt(request.getParameter("type_id"));
         String description_short = request.getParameter("description_short");
@@ -115,9 +154,8 @@ public class Hotels extends HttpServlet {
         dispatcher.forward(request, response);
 	}
 	
-	private void create(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
-		
+	private void create(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		edit(request,response);
 	}
 
 }

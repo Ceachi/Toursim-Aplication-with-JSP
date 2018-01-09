@@ -23,7 +23,9 @@
 	%>
 	
 	<div class="container">
-      <h3>Hotels</h3>
+      <h3>Hotels 
+		<a href="Hotels?action=new" class="btn btn-outline-success">Insert</a>
+	</h3>
       <div class="input-group">
         <input class="form-control" placeholder="Search accomodations">
         <div class="input-group-addon" ><i class="fa fa-search"></i></div>

@@ -45,7 +45,7 @@
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="stars">Address:</label>
+		    <label for="stars">Stars:</label>
 		    <select class="form-control" id="stars" name="stars">
 		    	<c:set var="stars">1,2,3,4,5,6,7</c:set>
 				<c:forEach items="${stars}" var="star">

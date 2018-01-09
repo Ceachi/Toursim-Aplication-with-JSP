@@ -7,15 +7,21 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class MySQLConnection {
+	
+	private static Connection connection;
+	
 	public static Connection startConnection() throws Exception {
+		
+		if(connection != null)
+			return connection;
+		
 		String databaseName = "tourism_agency";
 		String url="jdbc:mysql://localhost:3306/"+databaseName;
 		String username="root";
 		String password="1234";
 		Class.forName("com.mysql.jdbc.Driver");
-		Connection con=DriverManager.getConnection(url,username,password);
 		
-		return con;
+		return connection = DriverManager.getConnection(url,username,password);
 	}
 	
 	
