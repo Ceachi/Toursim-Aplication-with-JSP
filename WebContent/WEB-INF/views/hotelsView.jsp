@@ -48,7 +48,9 @@
 	          <th scope="row">#</th>
 	          <td>${accomodation.getName()}</td>
 	          <td>${accomodation.getStars()}</td>
-	          <td>${accomodation.getAddress().getCity().getName()}</td>
+	          <td>
+	          	<a href="Cities?action=edit&id=${accomodation.getAddress().getCity().getId()}">${accomodation.getAddress().getCity().getName()}</a>
+	          </td>
 	          <td>${accomodation.getAddress().getName()}</td>
 	          <td>
 	          	<a href="Hotels?action=edit&id=${accomodation.getId()}" class="btn btn-outline-success">Edit</a>

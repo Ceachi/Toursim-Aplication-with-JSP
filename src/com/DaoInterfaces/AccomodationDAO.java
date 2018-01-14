@@ -20,5 +20,10 @@ public interface AccomodationDAO {
 	   public Accomodation insertAccomodation(Accomodation accomodation);
 	   public void updateAccomodation(Accomodation accomodation);
 	   public void deleteAccomodation(Accomodation accomodation);
+	   
+	   
+	   public String validate(Accomodation accomodation);
+	   
+	   
 
 }

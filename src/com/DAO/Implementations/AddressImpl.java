@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.Tables.*;
 import com.dbConnection.MySQLConnection;
+import com.mysql.jdbc.Statement;
 import com.DaoInterfaces.AddressDAO;
 
 public class AddressImpl implements AddressDAO {
@@ -139,6 +140,69 @@ public class AddressImpl implements AddressDAO {
 	public City getCity(int city_id) {
 		City city = Factory.getCityImpl().getCity(city_id);
 		return city;
+	}
+
+	@Override
+	public Address insert(Address address) {
+		String sql = "insert address "
+				+ "(name,postal_code,latitude,longitude,city_id)"
+				+ "values (?,?,?,?,?)";
+		 
+		try {
+			Connection conn = MySQLConnection.startConnection();
+	        PreparedStatement pstm = conn.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+	 
+	        // implement ? in query
+	        pstm.setString(1, address.getName());
+	        pstm.setString(2, address.getPostal_code());
+	        pstm.setDouble(3, address.getLatitude());
+	        pstm.setDouble(4,  address.getLongitude());
+	        pstm.setInt(5,  address.getCity_id());
+	          
+	        //execute
+	        pstm.executeUpdate();
+	        
+	        ResultSet generatedKeys = pstm.getGeneratedKeys();
+            if (generatedKeys.next()) {
+            	address.setId(generatedKeys.getInt(1));
+            }
+	        
+	        pstm.close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return address;
+	}
+
+	@Override
+	public void update(Address address) {
+		String sql = "Update address set name=?, "
+				+ "postal_code=?, "
+				+ "latitude=?, "
+				+ "longitude=?, "
+				+ "city_id=? "
+				+ "where id=? ";
+		 
+		try {
+		Connection conn = MySQLConnection.startConnection();
+        PreparedStatement pstm = conn.prepareStatement(sql);
+ 
+        // implement ? in query
+        // implement ? in query
+        pstm.setString(1, address.getName());
+        pstm.setString(2, address.getPostal_code());
+        pstm.setDouble(3, address.getLatitude());
+        pstm.setDouble(4,  address.getLongitude());
+        pstm.setInt(5,  address.getCity_id());
+        pstm.setInt(6,  address.getId());
+        
+        //execute
+        pstm.executeUpdate();
+        pstm.close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 }

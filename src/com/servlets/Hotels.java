@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.DAO.Implementations.Factory;
 import com.Tables.Accomodation;
@@ -22,39 +23,10 @@ import com.mysql.jdbc.StringUtils;
  * Servlet implementation class Hotels
  */
 @WebServlet("/Hotels")
-public class Hotels extends HttpServlet {
+public class Hotels extends Controller {
 	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String action = request.getParameter("action");
-		
-		if(action == null)action = "";
-        switch (action) {
-            case "new":
-                create(request, response);
-                break;
-            case "insert":
-                insert(request, response);
-                break;
-            case "edit":
-                edit(request, response);
-                break;
-            case "update":
-                update(request, response);
-                break;
-            case "delete":
-                delete(request, response);
-                break;
-            default:
-                list(request, response);
-                break;
-        }
-		
-	}
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
-	}
-	
-	private void insert(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	@Override
+	protected void insert(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		
         String name = request.getParameter("name");
         int type_id = Integer.parseInt(request.getParameter("type_id"));
@@ -80,7 +52,7 @@ public class Hotels extends HttpServlet {
 		
 	}
 	
-	private void edit(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void edit(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String idParam = request.getParameter("id");
 		
 		if( idParam != null) {
@@ -101,7 +73,7 @@ public class Hotels extends HttpServlet {
         dispatcher.forward(request, response);
 		
 	}
-	private void update(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void update(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String idParam = request.getParameter("id");
 		System.out.println("ftghdf");
 		System.out.println(idParam);
@@ -121,6 +93,7 @@ public class Hotels extends HttpServlet {
         int address_id = Integer.parseInt(request.getParameter("address_id"));
         int contact_id = Integer.parseInt(request.getParameter("contact_id"));
         
+        
         Accomodation accomodation= Factory.getAccomodationImpl().getAccomodation(id);
         
         accomodation.setName(name);
@@ -131,19 +104,29 @@ public class Hotels extends HttpServlet {
         accomodation.setAddress_id(address_id);
         accomodation.setContact_id(contact_id);
         
+        String error = Factory.getAccomodationImpl().validate(accomodation); 
+        
+        if(error !=  null) { // if there is a validation error, values are not in the DB
+        	HttpSession session = request.getSession();
+			session.setAttribute("error", error);
+			session.setAttribute("isRedirectFromInside", true);
+	        response.sendRedirect("?action=edit&id="+id);
+            return;
+        }
+        
         Factory.getAccomodationImpl().updateAccomodation(accomodation);
 
         response.sendRedirect("?action=edit&id="+id);
 	}
 	
-	private void delete(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	protected void delete(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		int id = Integer.parseInt(request.getParameter("id"));
         Accomodation accomodation= Factory.getAccomodationImpl().getAccomodation(id);
         Factory.getAccomodationImpl().deleteAccomodation(accomodation);
 
         response.sendRedirect("?");
 	}
-	private void list(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void list(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		List<Accomodation> accomodations = new ArrayList<Accomodation>();
 		accomodations = Factory.getAccomodationImpl().getAllAccomodations();
 		
@@ -154,8 +137,5 @@ public class Hotels extends HttpServlet {
         dispatcher.forward(request, response);
 	}
 	
-	private void create(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		edit(request,response);
-	}
 
 }

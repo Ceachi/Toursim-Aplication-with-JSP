@@ -201,4 +201,60 @@ public class AccomodationImpl implements AccomodationDAO {
 		return accomodation_type;
 	}
 
+	@Override
+	public String validate(Accomodation accomodation) {
+
+		String error;
+		// name
+		if(accomodation.getName() == "") {
+			return "Name is required";
+		}
+		
+
+		// acc type
+		List<? extends Model> types = Factory.getAccomodation_typeImpl().getAllAccomodation_types();
+		error = this.validateList(accomodation.getAccomodation_type_id(),types,"Wrong Accomodation type");
+		if(error != null)
+			return error;
+		
+		// stars
+		boolean hasIt = false;
+		int stars[] = { 1,2,3,4,5,6,7};
+		for ( int star : stars) {
+			if(star == accomodation.getStars())
+				hasIt = true;
+		}
+		if(!hasIt)
+			return "Wrong number of stars";
+		
+		// acc address
+		List<? extends Model> addresses = Factory.getAddressImpl().getAllAddress();
+		error = this.validateList(accomodation.getAccomodation_type_id(),addresses,"Wrong Address");
+		if(error != null)
+			return error;
+		
+		// acc address
+		List<? extends Model> contacts = Factory.getContactImpl().getAllContacts();
+		error = this.validateList(accomodation.getAccomodation_type_id(),contacts,"Wrong Contact");
+		if(error != null)
+			return error;
+		
+		return null;
+	}
+
+	private String validateList(int value, List<? extends Model> list, String message) {
+		boolean hasIt = false;
+		for ( Model item : list) {
+			if(((com.Tables.Model) item).getId() == value)
+				hasIt = true;
+		}
+		if(!hasIt)
+			return message;
+		return null;
+	}
+	
+	
+
+	
+	
 }

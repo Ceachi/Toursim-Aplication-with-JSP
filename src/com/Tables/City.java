@@ -1,9 +1,13 @@
 package com.Tables;
 
+import java.util.List;
+
+import com.DAO.Implementations.Factory;
+
 public class City {
 	private int id;
 	private String name;
-	private String ISC3;
+	private String ISO3;
 	private double latitude;
 	private double longitude;
 	private int county_id;
@@ -19,11 +23,11 @@ public class City {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getISC3() {
-		return ISC3;
+	public String getISO3() {
+		return ISO3;
 	}
-	public void setISC3(String iSC3) {
-		ISC3 = iSC3;
+	public void setISO3(String iSO3) {
+		ISO3 = iSO3;
 	}
 	public double getLatitude() {
 		return latitude;
@@ -42,6 +46,11 @@ public class City {
 	}
 	public void setCounty_id(int county_id) {
 		this.county_id = county_id;
+	}
+	public List<Accomodation> getAccomodations() {
+
+		return Factory.getCityImpl().getAccomodations(this.getId());
+
 	}
 	
 	

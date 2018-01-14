@@ -1,7 +1,6 @@
 package com.Tables;
 
-public class Contact {
-	private int id;
+public class Contact extends Model {
 	private String email;
 	private String phone;
 	private String phone2;
@@ -9,12 +8,6 @@ public class Contact {
 	private String website;
 	private String facebook;
 	private String linkedin;
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
 	public String getEmail() {
 		return email;
 	}
@@ -59,7 +52,7 @@ public class Contact {
 	}
 	@Override
 	public String toString() {
-		return "Contact [id=" + id + ", email=" + email + ", phone=" + phone + ", phone2=" + phone2 + ", fax=" + fax
+		return "Contact [email=" + email + ", phone=" + phone + ", phone2=" + phone2 + ", fax=" + fax
 				+ ", website=" + website + ", facebook=" + facebook + ", linkedin=" + linkedin + "]";
 	}
 	

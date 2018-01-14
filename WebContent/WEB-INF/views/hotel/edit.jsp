@@ -6,10 +6,24 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Hotels Page</title>
-
+	<script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
 	<link rel="stylesheet" href="<c:url value="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" />" />
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <link rel="stylesheet" href="<c:url value="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />" />
 </head>
+<script type="text/javascript">
+
+<% if (session.getAttribute("error") != null) { %>
+
+	$(function () { 
+		toastr.error('<%= session.getAttribute("error") %>', 'Error!');
+	});
+<% } %>
+    
+</script>
 <body>
      <jsp:include page="../_menu.jsp"></jsp:include>
 	
@@ -69,6 +83,7 @@
 		  
 		  <div class="form-group">
 		    <label for="address">Address:</label>
+		    <a class="btn btn-primary" href="Addresses?action=new">Add Address</a>
 			<select class="form-control" id="address" name="address_id">
 				<c:forEach items="${addresses}" var="address">
 					<option value="${address.getId()}" ${accomodation.getAddress_id() == address.getId() ? 'selected' : ''}>

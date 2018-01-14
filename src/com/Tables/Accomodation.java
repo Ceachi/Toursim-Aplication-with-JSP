@@ -5,8 +5,7 @@ import java.util.List;
 import com.DAO.Implementations.Factory;
 
 
-public class Accomodation {
-	private int id;
+public class Accomodation extends Model{
 	private String name;
 	private int stars;
 	private String description_full;
@@ -35,12 +34,6 @@ public class Accomodation {
 	}
 	public void setAccomodation_type_id(int accomodation_type_id) {
 		this.accomodation_type_id = accomodation_type_id;
-	}
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
 	}
 	public String getName() {
 		return name;
