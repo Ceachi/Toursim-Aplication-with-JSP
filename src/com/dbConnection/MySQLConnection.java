@@ -17,8 +17,10 @@ public class MySQLConnection {
 		
 		String databaseName = "tourism_agency";
 		String url="jdbc:mysql://localhost:3306/"+databaseName;
-		String username="root";
-		String password="1234";
+		String username="tourism_agent";
+		String password="1234abcd";
+		//String username="root";
+		//String password="1234";
 		Class.forName("com.mysql.jdbc.Driver");
 		
 		return connection = DriverManager.getConnection(url,username,password);

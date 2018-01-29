@@ -5,4 +5,4 @@ pct I din doc de pe moodle
 +alerte/toaters
 +apelare formular din alt formular
 +ptr un hotel sa avem de ex clientii cazati in momentul de fata
-adaugare utilizator baza de date
++adaugare utilizator baza de date
